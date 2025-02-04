@@ -19,3 +19,18 @@ A small challenge that involves building a [Bingo 90](https://en.wikipedia.org/w
 
 Try to also think about the performance aspects of your solution. How long does it take to generate 10k strips? 
 The recommended time is less than 1s (with a lightweight random implementation)
+
+-----
+
+## Notes
+
+## Design
+
+- implement a component that generates a ticket
+- implement a component that generates a strip of tickets
+- implement a component that validates a strip of tickets
+- implement a simple REST API to generate a strip of tickets
+
+### TODOs
+
+- [ ] make the app configurable
