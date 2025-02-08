@@ -20,8 +20,8 @@ public class BingoTicketGeneratorService {
         List<List<Integer>> columns = new ArrayList<>();
         for (int col = 0; col < Bingo90Ticket.COLUMNS; ++col) {
             int min = col * 10 + 1;
-            int max = (col == 8) ? 90 : (col + 1) * 10;
-            List<Integer> numbers = getUniqueRandomNumbers(min, max, availableNumbers, 3);
+            int max = (col == 8) ? 90 : (col == 0) ? 9 : (col + 1) * 10;
+            List<Integer> numbers = getUniqueRandomNumbers(min, max, availableNumbers, getRandomNumbersPerColumn(result));
             columns.add(numbers);
         }
         result.addColumns(columns);
@@ -44,9 +44,11 @@ public class BingoTicketGeneratorService {
     }
 
     private int getRandomNumbersPerColumn(Bingo90Ticket ticket) {
-        int remaining = Bingo90Ticket.MAX_NUMBERS - ticket.getCurrentNumbersCount(); // TODO extract a Context
+        int remaining = Bingo90Ticket.MAX_NUMBERS - ticket.getCurrentNumbersCount();
+        if (remaining < 3) {
+            return remaining;
+        }
         return Math.min(remaining, random.nextInt(Bingo90Ticket.ROWS) + 1);
-//        return new Random().nextInt(2) + 1;
     }
 
 }

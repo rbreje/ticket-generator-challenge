@@ -26,29 +26,10 @@ public class Bingo90Ticket {
             List<Integer> numbers = columns.get(col);
             List<Integer> rows = new ArrayList<>(Arrays.asList(0, 1, 2));
             Collections.shuffle(rows);
-            int placed = 0;
-
-            while (placed < 2 && numbers.size() > 0 && numbersPlaced < MAX_NUMBERS) {
-                matrix[rows.get(placed)][col] = numbers.remove(0);
+            for (int i = 0; i < numbers.size() && numbersPlaced < MAX_NUMBERS; i++) {
+                matrix[rows.get(i)][col] = numbers.get(i);
                 numbersPlaced++;
-                placed++;
             }
-            
-            
-            // second
-            
-//            for (int i = 0; i < numbers.size() && numbersPlaced < MAX_NUMBERS && placed < 3; i++) {
-//                matrix[rows.get(i)][col] = numbers.get(i);
-//                numbersPlaced++;
-//                placed++;
-//            }
-            
-            // first
-            
-//            for (int i = 0; i < numbers.size() && numbersPlaced < MAX_NUMBERS; i++) {
-//                matrix[rows.get(i)][col] = numbers.get(i);
-//                numbersPlaced++;
-//            }
         }
     }
 
@@ -63,10 +44,6 @@ public class Bingo90Ticket {
         );
 
         return sb.toString();
-    }
-
-    public int[][] getInternalState() {
-        return matrix;
     }
 
     public int getCurrentNumbersCount() {
