@@ -1,36 +1,31 @@
 package dev.breje.bingo.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Bingo90Ticket {
 
     public static final int ROWS = 3;
-    public static final int COLUMNS = 9;
-    public static final int MAX_NUMBERS = 15;
 
-    private final int[][] matrix;
+    private final Map<Integer, List<Integer>> columns;
 
     public Bingo90Ticket() {
-        matrix = new int[ROWS][COLUMNS];
-        for (int[] row : matrix) Arrays.fill(row, -1);
+        columns = new HashMap<>(9);
+        IntStream.rangeClosed(0, 8).forEach(index -> columns.put(index, new ArrayList<>()));
     }
 
-    public void addColumns(List<List<Integer>> columns) {
-        int numbersPlaced = 0;
-        for (int col = 0; col < COLUMNS; col++) {
-            List<Integer> numbers = columns.get(col);
-            List<Integer> rows = new ArrayList<>(Arrays.asList(0, 1, 2));
-            Collections.shuffle(rows);
-            for (int i = 0; i < numbers.size() && numbersPlaced < MAX_NUMBERS; i++) {
-                matrix[rows.get(i)][col] = numbers.get(i);
-                numbersPlaced++;
-            }
-        }
+    public List<Integer> getColumn(int index) {
+        return columns.get(index);
+    }
+
+    public List<Integer> getRow(int index) {
+        return IntStream.rangeClosed(0, 8)
+                .mapToObj(columnIndex -> columns.get(columnIndex).get(index))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -38,18 +33,13 @@ public class Bingo90Ticket {
         StringBuilder sb = new StringBuilder();
 
         IntStream.range(0, ROWS).forEach(
-                index -> sb.append(Arrays.stream(matrix[index])
-                        .mapToObj(val -> val == -1 ? "  " : val < 10 ? " " + val : String.valueOf(val))
-                        .collect(Collectors.joining(", "))).append("\n")
+                index -> {
+                    List<Integer> row = getRow(index);
+                    sb.append(row);
+                    sb.append("\n");
+                }
         );
 
         return sb.toString();
-    }
-
-    public int getCurrentNumbersCount() {
-        return Arrays.stream(matrix)
-                .flatMapToInt(Arrays::stream)
-                .filter(val -> val != -1)
-                .toArray().length;
     }
 }
