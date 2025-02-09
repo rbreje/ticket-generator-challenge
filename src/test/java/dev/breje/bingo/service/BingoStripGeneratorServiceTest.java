@@ -1,15 +1,11 @@
 package dev.breje.bingo.service;
 
 import dev.breje.bingo.model.Bingo90Strip;
-import dev.breje.bingo.model.Bingo90Ticket;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class BingoStripGeneratorServiceTest {
-    
+
     private BingoStripGeneratorService bingoStripGeneratorService;
 
     @BeforeEach
@@ -19,7 +15,9 @@ public class BingoStripGeneratorServiceTest {
 
     @Test
     public void testGenerateBingo90Strip() {
-        bingoStripGeneratorService.generateBingo90Strip();
+        Bingo90Strip bingo90Strip = bingoStripGeneratorService.generateBingo90Strip();
+
+        System.out.println(bingo90Strip);
     }
-    
+
 }
