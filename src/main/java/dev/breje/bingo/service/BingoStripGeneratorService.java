@@ -33,13 +33,12 @@ public class BingoStripGeneratorService {
                 }))
                 .toList();
 
-        // split them into separate lists & sort them (Step 2)
+        // split them into separate lists (Step 2)
         shuffledNumbers.forEach(
                 number -> {
                     int group = BigInteger.valueOf(number).divide(BigInteger.valueOf(10)).intValue();
                     group = group == 9 ? 8 : group;
                     availableNumbersPerGroup.get(group).add(number);
-                    Collections.sort(availableNumbersPerGroup.get(group));
                 }
         );
 
