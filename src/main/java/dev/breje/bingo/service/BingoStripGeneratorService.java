@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -70,10 +71,74 @@ public class BingoStripGeneratorService {
         }
         pickRandomNumbers(result.getTicket(3).getDataAsColumns(), availableNumbersPerGroup);
 
+        // 5th ticket (Step 7)
+        availableNumbersPerGroup.forEach((key, value) -> {
+            if (value.size() == 4) {
+                result.getTicket(4).getDataAsColumns().get(key).add(value.pop());
+                result.getTicket(4).getDataAsColumns().get(key).add(value.pop());
+                Collections.sort(result.getTicket(4).getDataAsColumns().get(key));
+            }
+            if (value.size() == 3) {
+                result.getTicket(4).getDataAsColumns().get(key).add(value.pop());
+                Collections.sort(result.getTicket(4).getDataAsColumns().get(key));
+            }
+        });
+        pickRandomNumbers(result.getTicket(4).getDataAsColumns(), availableNumbersPerGroup);
+
+        // 6th ticket (Step 8)
+        availableNumbersPerGroup.forEach((key, value) -> {
+            value.forEach(number -> result.getTicket(5).getDataAsColumns().get(key).add(number));
+        });
+
+        // Adding blank spaces (Step 10)
+        result.getTickets().forEach(ticket -> {
+            Map<Integer, LinkedList<Integer>> ticketColumns = ticket.getDataAsColumns();
+
+            // substep 1
+            ticketColumns.values().stream()
+                    .filter(columnList -> columnList.size() < 3)
+                    .collect(Collectors.collectingAndThen(Collectors.toList(), collected -> {
+                        Collections.shuffle(collected);
+                        return collected.stream();
+                    }))
+                    .limit(4)
+                    .forEach(columnList -> columnList.addFirst(0));
+
+            AtomicInteger secondRowInsertCounter = new AtomicInteger();
+            // substep 2
+            ticketColumns.values().stream()
+                    .filter(columnList -> columnList.size() == 1)
+                    .collect(Collectors.collectingAndThen(Collectors.toList(), collected -> {
+                        Collections.shuffle(collected);
+                        return collected.stream();
+                    }))
+                    .limit(4)
+                    .forEach(columnList -> {
+                        secondRowInsertCounter.getAndIncrement();
+                        columnList.add(1, 0);
+                        columnList.addLast(0);
+                    });
+
+            // substep 3
+            ticketColumns.values().stream()
+                    .filter(columnList -> columnList.size() == 2)
+                    .collect(Collectors.collectingAndThen(Collectors.toList(), collected -> {
+                        Collections.shuffle(collected);
+                        return collected.stream();
+                    }))
+                    .limit(4 - secondRowInsertCounter.get())
+                    .forEach(columnList -> columnList.add(1, 0));
+
+            // substep 4
+            ticketColumns.values().stream()
+                    .filter(columnList -> columnList.size() == 2)
+                    .forEach(columnList -> columnList.add(0));
+        });
+
         return result;
     }
 
-    private void pickRandomNumbers(Map<Integer, List<Integer>> ticketColumns, Map<Integer, LinkedList<Integer>> availableNumbersPerGroup) {
+    private void pickRandomNumbers(Map<Integer, LinkedList<Integer>> ticketColumns, Map<Integer, LinkedList<Integer>> availableNumbersPerGroup) {
         int numbersToWithdraw = Bingo90Ticket.NUMBERS_PER_TICKET - ticketColumns.values()
                 .stream()
                 .map(List::size)

@@ -1,6 +1,7 @@
 package dev.breje.bingo.model;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
@@ -18,6 +19,12 @@ public class Bingo90Strip {
 
     public Bingo90Ticket getTicket(int index) {
         return tickets.get(index);
+    }
+    
+    public List<Bingo90Ticket> getTickets() {
+        return tickets.values()
+                .stream()
+                .toList();
     }
 
     @Override
