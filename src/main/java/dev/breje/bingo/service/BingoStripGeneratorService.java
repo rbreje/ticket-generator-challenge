@@ -63,7 +63,7 @@ public class BingoStripGeneratorService {
                 }
         );
 
-        // 4th ticket pick 1 number from the last column (Step 6)
+        // 4th ticket pick 1 number from the last column if there are too many (Step 6)
         if (availableNumbersPerGroup.get(8).size() == 5) {
             result.getTicket(3).getDataAsColumns().get(8).add(availableNumbersPerGroup.get(8).pop());
         }

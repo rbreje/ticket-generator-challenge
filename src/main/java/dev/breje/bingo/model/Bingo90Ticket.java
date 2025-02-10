@@ -28,6 +28,36 @@ public class Bingo90Ticket {
         return columns;
     }
 
+    public List<List<Integer>> getDataPerRows() {
+        List<List<Integer>> rows = new ArrayList<>(ROWS);
+        IntStream.range(0, ROWS).forEach(index -> rows.add(new ArrayList<>(COLUMNS)));
+        IntStream.range(0, COLUMNS).forEach(
+                columnIndex -> {
+                    IntStream.range(0, ROWS).forEach(
+                            rowIndex -> {
+                                rows.get(rowIndex).add(columns.get(columnIndex).get(rowIndex));
+                            }
+                    );
+                }
+        );
+        return rows;
+    }
+
+    public List<List<Integer>> getDataPerColumns() {
+        List<List<Integer>> columns = new ArrayList<>(COLUMNS);
+        IntStream.range(0, COLUMNS).forEach(index -> columns.add(new ArrayList<>(ROWS)));
+        IntStream.range(0, ROWS).forEach(
+                rowIndex -> {
+                    IntStream.range(0, COLUMNS).forEach(
+                            columnIndex -> {
+                                columns.get(columnIndex).add(this.columns.get(rowIndex).get(columnIndex));
+                            }
+                    );
+                }
+        );
+        return columns;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

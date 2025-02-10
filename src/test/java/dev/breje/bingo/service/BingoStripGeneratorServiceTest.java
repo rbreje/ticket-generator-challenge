@@ -22,6 +22,8 @@ public class BingoStripGeneratorServiceTest {
         Bingo90Strip bingo90Strip = bingoStripGeneratorService.generateBingo90Strip();
 
         System.out.println(bingo90Strip);
+
+        System.out.println(bingo90Strip.getTicket(0).getDataPerRows());
     }
 
     @Test

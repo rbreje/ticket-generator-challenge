@@ -56,3 +56,11 @@ I tried to generate the ticket individually, but it's not scalable.
 - implement a component that generates a strip of tickets
 - implement a component that validates a strip of tickets
 - implement a simple REST API to generate a strip of tickets
+
+## TODOs
+
+[ ] Enhance the validation service readability
+[ ] Enhance the generation service readability
+[ ] Add tests for all the service
+[ ] Implement the REST endpoint to generate a ticket
+[ ] Convert the domain to DTO as JSON
