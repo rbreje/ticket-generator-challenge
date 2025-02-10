@@ -51,7 +51,6 @@ public class BingoStripGeneratorService {
                             {
                                 List<Integer> column = ticket.getColumn(columnIndex);
                                 column.add(availableNumbersPerGroup.get(columnIndex).pop());
-                                Collections.sort(column);
                             }
                     );
                 }
@@ -67,7 +66,6 @@ public class BingoStripGeneratorService {
         // 4th ticket pick 1 number from the last column (Step 6)
         if (availableNumbersPerGroup.get(8).size() == 5) {
             result.getTicket(3).getDataAsColumns().get(8).add(availableNumbersPerGroup.get(8).pop());
-            Collections.sort(result.getTicket(3).getDataAsColumns().get(8));
         }
         pickRandomNumbers(result.getTicket(3).getDataAsColumns(), availableNumbersPerGroup);
 
@@ -76,11 +74,9 @@ public class BingoStripGeneratorService {
             if (value.size() == 4) {
                 result.getTicket(4).getDataAsColumns().get(key).add(value.pop());
                 result.getTicket(4).getDataAsColumns().get(key).add(value.pop());
-                Collections.sort(result.getTicket(4).getDataAsColumns().get(key));
             }
             if (value.size() == 3) {
                 result.getTicket(4).getDataAsColumns().get(key).add(value.pop());
-                Collections.sort(result.getTicket(4).getDataAsColumns().get(key));
             }
         });
         pickRandomNumbers(result.getTicket(4).getDataAsColumns(), availableNumbersPerGroup);
@@ -88,6 +84,11 @@ public class BingoStripGeneratorService {
         // 6th ticket (Step 8)
         availableNumbersPerGroup.forEach((key, value) -> {
             value.forEach(number -> result.getTicket(5).getDataAsColumns().get(key).add(number));
+        });
+
+        // Sort already added numbers (Step 9)
+        result.getTickets().forEach(ticket -> {
+            ticket.getDataAsColumns().values().forEach(Collections::sort);
         });
 
         // Adding blank spaces (Step 10)
@@ -151,7 +152,6 @@ public class BingoStripGeneratorService {
             for (Map.Entry<Integer, LinkedList<Integer>> colUnusedNumbers : availableNumbersPerGroup.entrySet()) {
                 if (!colUnusedNumbers.getValue().isEmpty() && ticketColumns.get(colUnusedNumbers.getKey()).size() < Bingo90Ticket.ROWS) {
                     ticketColumns.get(colUnusedNumbers.getKey()).add(colUnusedNumbers.getValue().pop());
-                    Collections.sort(ticketColumns.get(colUnusedNumbers.getKey()));
                     break;
                 }
             }
@@ -161,7 +161,6 @@ public class BingoStripGeneratorService {
             for (Map.Entry<Integer, LinkedList<Integer>> colUnusedNumbers : availableNumbersPerGroup.entrySet()) {
                 if (!colUnusedNumbers.getValue().isEmpty() && ticketColumns.get(colUnusedNumbers.getKey()).size() < Bingo90Ticket.ROWS) {
                     ticketColumns.get(colUnusedNumbers.getKey()).add(colUnusedNumbers.getValue().pop());
-                    Collections.sort(ticketColumns.get(colUnusedNumbers.getKey()));
                     break;
                 }
             }
