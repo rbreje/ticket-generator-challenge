@@ -22,6 +22,7 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 	testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.4")
+	testImplementation("org.mockito:mockito-core:5.5.0")
 }
 
 tasks.withType<Test> {

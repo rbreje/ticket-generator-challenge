@@ -64,3 +64,5 @@ I tried to generate the ticket individually, but it's not scalable.
 [ ] Add tests for all the service
 [ ] Implement the REST endpoint to generate a ticket
 [ ] Convert the domain to DTO as JSON
+[ ] Implement the API error handling
+[ ] Convert the domain to DTO (json)
