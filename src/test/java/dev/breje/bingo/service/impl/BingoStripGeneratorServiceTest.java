@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class BingoStripGeneratorServiceTest {
+class BingoStripGeneratorServiceTest {
 
     private BingoStripGeneratorService bingoStripGeneratorService;
 
@@ -19,7 +19,7 @@ public class BingoStripGeneratorServiceTest {
     }
 
     @Test
-    public void testGenerateBingo90Strip() {
+    void testGenerateBingo90Strip() {
         Bingo90Strip bingo90Strip = bingoStripGeneratorService.generateBingo90Strip();
 
         IBingoStripValidationService validationService = new BingoStripValidationService();
@@ -27,7 +27,7 @@ public class BingoStripGeneratorServiceTest {
     }
 
     @Test
-    public void testGenerateBingo90StripByExecutionTime() {
+    void testGenerateBingo90StripByExecutionTime() {
         long startTime = System.nanoTime();
 
         IntStream.range(0, 10000).forEach(index -> bingoStripGeneratorService.generateBingo90Strip());

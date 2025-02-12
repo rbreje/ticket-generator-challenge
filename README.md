@@ -22,13 +22,106 @@ The recommended time is less than 1s (with a lightweight random implementation)
 
 -----
 
-## Notes 
+# Personal Notes
 
-from Raul Breje
+I have spent around 8 hours on designing and implementing the solution. I exposed the Bingo 90 generator via a simple REST API endpoint.  
 
-I have spent around 9.5 hours on thinking and implementing the solution.  
+The Bingo 90 Strip completeness and correctness are validated via a dedicated service. The solution is able to generate 10k strips in under 1 second even when validating each individual strip.
 
-## Design 
+# How to Build & Run It
+
+> **Note:** The project requires Java 17.
+
+```shell
+./gradlew bootRun
+```
+
+You just have to make a request to generate one strip of Bingo 90 tickets.
+
+```shell
+curl --request POST \
+  --url http://localhost:8080/api/v1/bingo-90/strips
+```
+
+# API Endpoints
+
+```
+POST /api/v1/bingo-90/strips
+```
+### Request
+
+None.
+
+### Response
+
+```json
+{
+  "bingoStrip": [
+    {
+      "bingoTicket": {
+        "bingoTicketNo": 1,
+        "data": [
+          [5, 10, 20, 0, 0, 0, 62, 70, 0],
+          [6, 13, 22, 0, 0, 50, 0, 0, 85],
+          [9, 14, 27, 34, 45, 0, 0, 0, 0]
+        ]
+      }
+    },
+    {
+      "bingoTicket": {
+        "bingoTicketNo": 2,
+        "data": [
+          [0, 12, 23, 0, 0, 53, 61, 0, 86],
+          [7, 15, 24, 33, 40, 0, 0, 0, 0],
+          [8, 17, 26, 38, 0, 0, 0, 76, 0]
+        ]
+      }
+    },
+    {
+      "bingoTicket": {
+        "bingoTicketNo": 3,
+        "data": [
+          [0, 0, 0, 31, 41, 54, 69, 0, 80],
+          [0, 0, 28, 35, 47, 55, 0, 78, 0],
+          [3, 16, 0, 39, 49, 58, 0, 0, 0]
+        ]
+      }
+    },
+    {
+      "bingoTicket": {
+        "bingoTicketNo": 4,
+        "data": [
+          [0, 0, 29, 30, 42, 52, 0, 0, 82],
+          [2, 0, 0, 0, 43, 57, 65, 0, 89],
+          [0, 19, 0, 37, 48, 59, 0, 75, 0]
+        ]
+      }
+    },
+    {
+      "bingoTicket": {
+        "bingoTicketNo": 5,
+        "data": [
+          [0, 11, 25, 0, 0, 0, 60, 71, 81],
+          [1, 0, 0, 0, 46, 0, 67, 72, 84],
+          [0, 0, 0, 32, 0, 56, 68, 79, 87]
+        ]
+      }
+    },
+    {
+      "bingoTicket": {
+        "bingoTicketNo": 6,
+        "data": [
+          [0, 0, 21, 36, 0, 0, 63, 73, 83],
+          [0, 18, 0, 0, 44, 0, 64, 74, 88],
+          [4, 0, 0, 0, 0, 51, 66, 77, 90]
+        ]
+      }
+    }
+  ]
+}
+```
+
+# Design 
 
 ### Second Approach
 
@@ -52,7 +145,7 @@ We need to start from another perspective. Hence, we start from the total amount
   - all remaining columns with 2 numbers (including zero) will get a zero at the bottom
 11. Validate the tickets
 
-### First Approach (Outdated)
+#### First Approach (Outdated)
 
 I tried to generate the ticket individually, but it's not scalable. 
 
@@ -68,5 +161,9 @@ I tried to generate the ticket individually, but it's not scalable.
 - [x] Add tests for all the service
 - [x] Implement the REST endpoint to generate a ticket
 - [x] Convert the domain to DTO as JSON
-- [ ] Implement the API error handling
 - [x] Convert the domain to DTO (json)
+
+# Further Features
+
+- [ ] Extend the REST endpoint to generate multiple strips
+- [ ] Implement the API error handling

@@ -22,7 +22,7 @@ public class BingoStripGeneratorService implements IBingoStripGeneratorService {
     public Bingo90Strip generateBingo90Strip() {
         // initiate the groups (Step 1)
         Map<Integer, LinkedList<Integer>> availableNumbersPerGroup = new HashMap<>();
-        IntStream.range(0, Bingo90Ticket.COLUMNS)
+        IntStream.range(0, Bingo90Ticket.COLUMNS_NO)
                 .boxed()
                 .forEach(group -> availableNumbersPerGroup.put(group, new LinkedList<>()));
 
@@ -48,7 +48,7 @@ public class BingoStripGeneratorService implements IBingoStripGeneratorService {
         Bingo90Strip result = new Bingo90Strip();
         IntStream.range(0, Bingo90Strip.TICKETS_PER_STRIP).forEach(ticketIndex -> {
                     Bingo90Ticket ticket = result.getTicket(ticketIndex);
-                    IntStream.range(0, Bingo90Ticket.COLUMNS).forEach(columnIndex ->
+                    IntStream.range(0, Bingo90Ticket.COLUMNS_NO).forEach(columnIndex ->
                             {
                                 List<Integer> column = ticket.getColumn(columnIndex);
                                 column.add(availableNumbersPerGroup.get(columnIndex).pop());
@@ -142,12 +142,12 @@ public class BingoStripGeneratorService implements IBingoStripGeneratorService {
                 .map(List::size)
                 .reduce(0, Integer::sum);
 
-        int firstAttempt = Math.min(numbersToWithdraw, Bingo90Ticket.ROWS);
+        int firstAttempt = Math.min(numbersToWithdraw, Bingo90Ticket.ROWS_NO);
         int secondAttempt = numbersToWithdraw - firstAttempt;
 
         IntStream.range(0, firstAttempt).forEach(iteration -> {
             for (Map.Entry<Integer, LinkedList<Integer>> colUnusedNumbers : availableNumbersPerGroup.entrySet()) {
-                if (!colUnusedNumbers.getValue().isEmpty() && ticketColumns.get(colUnusedNumbers.getKey()).size() < Bingo90Ticket.ROWS) {
+                if (!colUnusedNumbers.getValue().isEmpty() && ticketColumns.get(colUnusedNumbers.getKey()).size() < Bingo90Ticket.ROWS_NO) {
                     ticketColumns.get(colUnusedNumbers.getKey()).add(colUnusedNumbers.getValue().pop());
                     break;
                 }
@@ -156,7 +156,7 @@ public class BingoStripGeneratorService implements IBingoStripGeneratorService {
 
         IntStream.range(0, secondAttempt).forEach(iteration -> {
             for (Map.Entry<Integer, LinkedList<Integer>> colUnusedNumbers : availableNumbersPerGroup.entrySet()) {
-                if (!colUnusedNumbers.getValue().isEmpty() && ticketColumns.get(colUnusedNumbers.getKey()).size() < Bingo90Ticket.ROWS) {
+                if (!colUnusedNumbers.getValue().isEmpty() && ticketColumns.get(colUnusedNumbers.getKey()).size() < Bingo90Ticket.ROWS_NO) {
                     ticketColumns.get(colUnusedNumbers.getKey()).add(colUnusedNumbers.getValue().pop());
                     break;
                 }

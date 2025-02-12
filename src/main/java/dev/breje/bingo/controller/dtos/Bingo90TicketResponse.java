@@ -1,16 +1,17 @@
 package dev.breje.bingo.controller.dtos;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Bingo90TicketResponse {
 
-    private List<List<Integer>> dataPerRows;
+    @JsonProperty("bingoTicket")
+    private Bingo90TicketDataResponse ticket;
 
-    public List<List<Integer>> getDataPerRows() {
-        return dataPerRows;
+    public Bingo90TicketDataResponse getTicket() {
+        return ticket;
     }
 
-    public void setDataPerRows(List<List<Integer>> dataPerRows) {
-        this.dataPerRows = dataPerRows;
+    public void setTicket(Bingo90TicketDataResponse ticket) {
+        this.ticket = ticket;
     }
 }
