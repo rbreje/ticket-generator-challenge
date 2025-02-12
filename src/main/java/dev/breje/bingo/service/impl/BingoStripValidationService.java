@@ -87,15 +87,13 @@ public class BingoStripValidationService implements IBingoStripValidationService
     void validateTicketCompleteness(Bingo90Ticket bingo90Ticket) {
         AtomicInteger numbersCount = new AtomicInteger();
         bingo90Ticket.getDataPerColumns().forEach(
-                column -> {
-                    column.forEach(
-                            number -> {
-                                if (0 != number) {
-                                    numbersCount.getAndIncrement();
-                                }
+                column -> column.forEach(
+                        number -> {
+                            if (0 != number) {
+                                numbersCount.getAndIncrement();
                             }
-                    );
-                }
+                        }
+                )
         );
         if (numbersCount.get() != Bingo90Ticket.NUMBERS_PER_TICKET) {
             throw new Bingo90StripValidationException("Not all the required numbers were used");

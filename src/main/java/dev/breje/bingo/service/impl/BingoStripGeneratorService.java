@@ -83,14 +83,10 @@ public class BingoStripGeneratorService implements IBingoStripGeneratorService {
         pickRandomNumbers(result.getTicket(4).getDataAsColumns(), availableNumbersPerGroup);
 
         // 6th ticket (Step 8)
-        availableNumbersPerGroup.forEach((key, value) -> {
-            value.forEach(number -> result.getTicket(5).getDataAsColumns().get(key).add(number));
-        });
+        availableNumbersPerGroup.forEach((key, value) -> value.forEach(number -> result.getTicket(5).getDataAsColumns().get(key).add(number)));
 
         // Sort already added numbers (Step 9)
-        result.getTickets().forEach(ticket -> {
-            ticket.getDataAsColumns().values().forEach(Collections::sort);
-        });
+        result.getTickets().forEach(ticket -> ticket.getDataAsColumns().values().forEach(Collections::sort));
 
         // Adding blank spaces (Step 10)
         result.getTickets().forEach(ticket -> {

@@ -32,13 +32,11 @@ public class Bingo90Ticket {
         List<List<Integer>> rows = new ArrayList<>(ROWS);
         IntStream.range(0, ROWS).forEach(index -> rows.add(new ArrayList<>(COLUMNS)));
         IntStream.range(0, COLUMNS).forEach(
-                columnIndex -> {
-                    IntStream.range(0, ROWS).forEach(
-                            rowIndex -> {
-                                rows.get(rowIndex).add(columns.get(columnIndex).get(rowIndex));
-                            }
-                    );
-                }
+                columnIndex -> IntStream.range(0, ROWS).forEach(
+                        rowIndex -> {
+                            rows.get(rowIndex).add(columns.get(columnIndex).get(rowIndex));
+                        }
+                )
         );
         return rows;
     }
@@ -47,13 +45,11 @@ public class Bingo90Ticket {
         List<List<Integer>> columns = new ArrayList<>(COLUMNS);
         IntStream.range(0, COLUMNS).forEach(index -> columns.add(new ArrayList<>(ROWS)));
         IntStream.range(0, ROWS).forEach(
-                rowIndex -> {
-                    IntStream.range(0, COLUMNS).forEach(
-                            columnIndex -> {
-                                columns.get(columnIndex).add(this.columns.get(rowIndex).get(columnIndex));
-                            }
-                    );
-                }
+                rowIndex -> IntStream.range(0, COLUMNS).forEach(
+                        columnIndex -> {
+                            columns.get(columnIndex).add(this.columns.get(rowIndex).get(columnIndex));
+                        }
+                )
         );
         return columns;
     }
