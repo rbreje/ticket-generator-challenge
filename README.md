@@ -66,7 +66,7 @@ I tried to generate the ticket individually, but it's not scalable.
 - [x] Enhance the validation service readability
 - [x] Enhance the generation service readability
 - [x] Add tests for all the service
-- [ ] Implement the REST endpoint to generate a ticket
-- [ ] Convert the domain to DTO as JSON
+- [x] Implement the REST endpoint to generate a ticket
+- [x] Convert the domain to DTO as JSON
 - [ ] Implement the API error handling
-- [ ] Convert the domain to DTO (json)
+- [x] Convert the domain to DTO (json)

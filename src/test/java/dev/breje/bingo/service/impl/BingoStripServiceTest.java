@@ -23,7 +23,8 @@ public class BingoStripServiceTest {
     public void testGenerateBingo90Strip() {
         Bingo90Strip bingo90Strip = bingoStripService.generateBingo90Strip();
 
-        System.out.println(bingo90Strip);
+        BingoStripValidationService validationService = new BingoStripValidationService();
+        validationService.validateBingo90Strip(bingo90Strip);
     }
 
     @Test
