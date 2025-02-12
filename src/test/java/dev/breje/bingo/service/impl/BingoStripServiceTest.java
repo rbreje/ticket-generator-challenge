@@ -1,5 +1,6 @@
 package dev.breje.bingo.service.impl;
 
+import dev.breje.bingo.model.Bingo90Strip;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +17,13 @@ public class BingoStripServiceTest {
         BingoStripGeneratorService bingoStripGeneratorService = new BingoStripGeneratorService();
         BingoStripValidationService bingoStripValidationService = new BingoStripValidationService();
         bingoStripService = new BingoStripService(bingoStripGeneratorService, bingoStripValidationService);
+    }
+
+    @Test
+    public void testGenerateBingo90Strip() {
+        Bingo90Strip bingo90Strip = bingoStripService.generateBingo90Strip();
+
+        System.out.println(bingo90Strip);
     }
 
     @Test

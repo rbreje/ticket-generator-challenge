@@ -42,16 +42,16 @@ public class Bingo90Ticket {
     }
 
     public List<List<Integer>> getDataPerColumns() {
-        List<List<Integer>> columns = new ArrayList<>(COLUMNS);
-        IntStream.range(0, COLUMNS).forEach(index -> columns.add(new ArrayList<>(ROWS)));
+        List<List<Integer>> localColumns = new ArrayList<>(COLUMNS);
+        IntStream.range(0, COLUMNS).forEach(index -> localColumns.add(new ArrayList<>(ROWS)));
         IntStream.range(0, ROWS).forEach(
                 rowIndex -> IntStream.range(0, COLUMNS).forEach(
                         columnIndex -> {
-                            columns.get(columnIndex).add(this.columns.get(rowIndex).get(columnIndex));
+                            localColumns.get(columnIndex).add(this.columns.get(columnIndex).get(rowIndex));
                         }
                 )
         );
-        return columns;
+        return localColumns;
     }
 
     @Override
