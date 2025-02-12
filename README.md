@@ -22,7 +22,11 @@ The recommended time is less than 1s (with a lightweight random implementation)
 
 -----
 
-## Notes
+## Notes 
+
+from Raul Breje
+
+I have spent around 9.5 hours on thinking and implementing the solution.  
 
 ## Design 
 
@@ -59,10 +63,10 @@ I tried to generate the ticket individually, but it's not scalable.
 
 ## TODOs
 
-[ ] Enhance the validation service readability
-[ ] Enhance the generation service readability
-[ ] Add tests for all the service
-[ ] Implement the REST endpoint to generate a ticket
-[ ] Convert the domain to DTO as JSON
-[ ] Implement the API error handling
-[ ] Convert the domain to DTO (json)
+- [x] Enhance the validation service readability
+- [x] Enhance the generation service readability
+- [x] Add tests for all the service
+- [ ] Implement the REST endpoint to generate a ticket
+- [ ] Convert the domain to DTO as JSON
+- [ ] Implement the API error handling
+- [ ] Convert the domain to DTO (json)

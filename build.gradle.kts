@@ -25,6 +25,13 @@ dependencies {
 	testImplementation("org.mockito:mockito-core:5.5.0")
 }
 
+tasks.test {
+	useJUnitPlatform()
+	testLogging {
+		events("passed", "skipped", "failed")
+	}
+}
+
 tasks.withType<Test> {
 	useJUnitPlatform()
 }

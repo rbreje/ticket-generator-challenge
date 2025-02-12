@@ -1,8 +1,9 @@
-package dev.breje.bingo.service;
+package dev.breje.bingo.service.impl;
 
 import dev.breje.bingo.exceptions.Bingo90StripValidationException;
 import dev.breje.bingo.model.Bingo90Strip;
 import dev.breje.bingo.model.Bingo90Ticket;
+import dev.breje.bingo.service.IBingoStripValidationService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,8 +11,9 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
-public class BingoStripValidationService {
+public class BingoStripValidationService implements IBingoStripValidationService {
 
+    @Override
     public void validateBingo90Strip(Bingo90Strip bingo90Strip) {
         validateStripCompleteness(bingo90Strip);
         bingo90Strip.getTickets().forEach(this::validateTicketCorrectness);
@@ -68,11 +70,12 @@ public class BingoStripValidationService {
                                     number -> {
                                         if (0 == number) {
                                             whiteSpacesCount.getAndIncrement();
+                                        } else {
+                                            if (number < prevNumber.get()) {
+                                                throw new Bingo90StripValidationException("The values are not in ascending order per column");
+                                            }
+                                            prevNumber.set(number);
                                         }
-                                        if (number < prevNumber.get()) {
-                                            throw new Bingo90StripValidationException("The values are not in ascending order per column");
-                                        }
-                                        prevNumber.set(number);
                                     });
                             if (whiteSpacesCount.get() == 3) {
                                 throw new Bingo90StripValidationException("Too many white spaces on a column");

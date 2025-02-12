@@ -1,7 +1,8 @@
-package dev.breje.bingo.service;
+package dev.breje.bingo.service.impl;
 
 import dev.breje.bingo.model.Bingo90Strip;
 import dev.breje.bingo.model.Bingo90Ticket;
+import dev.breje.bingo.service.IBingoStripGeneratorService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
@@ -15,8 +16,9 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service
-public class BingoStripGeneratorService {
+public class BingoStripGeneratorService implements IBingoStripGeneratorService {
 
+    @Override
     public Bingo90Strip generateBingo90Strip() {
         // initiate the groups (Step 1)
         Map<Integer, LinkedList<Integer>> availableNumbersPerGroup = new HashMap<>();
